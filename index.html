@@ -2,39 +2,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aftab Ahmed - Portfolio</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
+  <title>Aftab Ahmed - Portfolio</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">  <style>
     :root{
       --muted:#6b7280;
       --accent:#2563eb;
     }
+
     html{scroll-behavior:smooth}
-    body{background:linear-gradient(135deg,#eef2ff, #e0f2fe); color:#111827}
+    body{font-family:'Inter',system-ui,Arial,Helvetica,sans-serif; color:#111827;}
+    h1,h2,h3{font-family:'Poppins', 'Inter', sans-serif}
+
     /* Reveal on scroll */
     .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
     .reveal.visible{opacity:1; transform:none}
-    /* Three-dots menu panel */
-    .panel-enter{opacity:0; transform:scale(.96) translateY(-4px)}
+
+    /* Panel animation */
+    .panel-enter{opacity:0; transform:scale(.98) translateY(-6px)}
     .panel-enter.panel-show{opacity:1; transform:scale(1) translateY(0); transition:opacity .18s ease, transform .18s ease}
+
     /* Card helper */
     .card{background:#ffffff; border:1px solid rgba(0,0,0,.06); box-shadow:0 8px 24px rgba(15,23,42,.06);}
+
     /* Section spacing */
     section{scroll-margin-top:84px}
-  </style>
-</head>
-<body class="font-sans min-h-screen">
-  <!-- Header with three dots -->
-  <header class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
+
+    /* Backgrounds per section */
+    #hero{background:linear-gradient(135deg,#f0f9ff 0%, #f5f3ff 100%)}
+    #about{background:linear-gradient(135deg,#fff7ed 0%, #fffbeb 100%)}
+    #education{background:linear-gradient(135deg,#eef2ff 0%, #eef6ff 100%)}
+    #experience{background:linear-gradient(135deg,#f0fdf4 0%, #ecfdf5 100%)}
+    #skills{background:linear-gradient(135deg,#f9fafb 0%, #ffffff 100%)}
+    #contact{background:linear-gradient(135deg,#fff1f2 0%, #fff7fb 100%)}
+
+    /* Small visual touches */
+    .dot-menu{width:46px; height:34px; display:flex; flex-direction:column; justify-content:center; gap:5px}
+    .dot-menu span{display:block; height:3px; border-radius:999px; background:#111827; transition:transform .2s ease, width .2s ease}
+
+    /* when open, animate lines to X */
+    .open .l1{transform:translateY(8px) rotate(45deg)}
+    .open .l2{opacity:0}
+    .open .l3{transform:translateY(-8px) rotate(-45deg)}
+  </style></head>
+<body class="min-h-screen">  <!-- Header with three-line (hamburger) button -->  <header class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#hero" class="font-semibold tracking-tight">Aftab Ahmed</a>
       <button id="menuBtn" aria-expanded="false" aria-controls="menuOverlay" class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" title="Menu">
-        <!-- three dots icon -->
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="5" cy="12" r="2" fill="#111827"/>
-          <circle cx="12" cy="12" r="2" fill="#111827"/>
-          <circle cx="19" cy="12" r="2" fill="#111827"/>
-        </svg>
+        <!-- three lines (hamburger) -->
+        <div class="dot-menu" aria-hidden="true">
+          <span class="l1"></span>
+          <span class="l2"></span>
+          <span class="l3"></span>
+        </div>
       </button>
     </div>
   </header>  <!-- Overlay Menu -->  <div id="menuOverlay" class="fixed inset-0 z-40 hidden">
@@ -166,7 +185,7 @@
     }, {threshold:.12});
     document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-    // Three-dots menu logic
+    // Three-lines (hamburger) menu logic
     const btn = document.getElementById('menuBtn');
     const overlay = document.getElementById('menuOverlay');
     const panel = overlay.querySelector('nav');
@@ -176,9 +195,33 @@
       overlay.classList.remove('hidden');
       requestAnimationFrame(()=> panel.classList.add('panel-show'));
       btn.setAttribute('aria-expanded','true');
+      btn.classList.add('open');
     }
     function closeMenu(){
       panel.classList.remove('panel-show');
+      setTimeout(()=> overlay.classList.add('hidden'), 120);
+      btn.setAttribute('aria-expanded','false');
+      btn.classList.remove('open');
+    }
+
+    btn.addEventListener('click', ()=>{
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      expanded ? closeMenu() : openMenu();
+    });
+    backdrop.addEventListener('click', closeMenu);
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+
+    // Smooth scroll for menu links and close on click
+    overlay.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target){ target.scrollIntoView({behavior:'smooth'}); }
+        closeMenu();
+      });
+    });
+  </script></body>
+  </html>el-show');
       setTimeout(()=> overlay.classList.add('hidden'), 120);
       btn.setAttribute('aria-expanded','false');
     }
