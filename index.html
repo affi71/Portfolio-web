@@ -1,229 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aftab Ahmed - Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
-    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
-    .fade.show { opacity: 1; transform: translateY(0); }
+    body { background: linear-gradient(to bottom right, #e0f2fe, #ede9fe); }
+    .section {
+      display: none;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.6s ease;
+    }
+    .section.active {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+    .menu-btn {
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .menu-btn:hover {
+      transform: scale(1.05);
+      background: #3b82f6;
+      color: white;
+    }
   </style>
 </head>
-<body class="font-sans bg-gray-100 text-gray-900">
+<body class="font-sans text-gray-800">
 
-  <!-- Navbar -->
-  <nav class="fixed w-full bg-white shadow z-10">
-    <div class="max-w-6xl mx-auto p-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold">Aftab Ahmed</h1>
-      <div class="space-x-4">
-        <a href="#about" class="hover:text-blue-600">About</a>
-        <a href="#education" class="hover:text-blue-600">Education</a>
-        <a href="#experience" class="hover:text-blue-600">Experience</a>
-        <a href="#skills" class="hover:text-blue-600">Skills</a>
-        <a href="#contact" class="hover:text-blue-600">Contact</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="h-screen flex flex-col justify-center items-center text-center bg-gradient-to-r from-blue-200 to-purple-200">
-    <h2 class="text-4xl font-bold mb-2 fade">Aftab Ahmed</h2>
-    <p class="text-lg mb-4 fade">Computer Science Student | Exploring Programming & Modern Technology</p>
-    <a href="#contact" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Contact Me</a>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="max-w-4xl mx-auto p-6 text-center fade">
-    <h3 class="text-2xl font-bold mb-4">About Me</h3>
-    <p>I am Aftab Ahmed, pursuing a Bachelor's degree in Computer Science at Lasbela University DMJ Campus (12/2024 – 12/2028). I am passionate about programming, data structures, and learning the foundations of modern technology.</p>
-  </section>
-
-  <!-- Education -->
-  <section id="education" class="max-w-4xl mx-auto p-6 fade">
-    <h3 class="text-2xl font-bold mb-4">Education</h3>
-    <div class="bg-white p-4 rounded shadow">
-      <h4 class="font-semibold">Lasbela University DMJ Campus (12/2024 – 12/2028)</h4>
-      <p>Pursuing a Bachelor's degree in Computer Science, exploring programming, data structures, and technology fundamentals.</p>
+  <!-- HERO SECTION -->
+  <section id="hero" class="h-screen flex flex-col justify-center items-center text-center">
+    <h1 class="text-4xl font-bold mb-4">Aftab Ahmed</h1>
+    <p class="text-lg mb-8">Computer Science Student | Exploring Programming & Modern Technology</p>
+    
+    <!-- MENU BUTTONS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-xl w-full px-4">
+      <button class="menu-btn px-6 py-4 bg-white rounded shadow text-lg font-semibold" onclick="openSection('about')">About</button>
+      <button class="menu-btn px-6 py-4 bg-white rounded shadow text-lg font-semibold" onclick="openSection('education')">Education</button>
+      <button class="menu-btn px-6 py-4 bg-white rounded shadow text-lg font-semibold" onclick="openSection('experience')">Experience & Skills</button>
     </div>
   </section>
 
-  <!-- Experience -->
-  <section id="experience" class="max-w-4xl mx-auto p-6 fade">
-    <h3 class="text-2xl font-bold mb-4">Professional Experience</h3>
-    <div class="space-y-4">
-      <div class="bg-white p-4 rounded shadow">
-        <h4 class="font-semibold">Teacher, Iqra Raztul Quran High School, Quetta</h4>
-        <p>Worked as a teacher, contributing to academic growth and learning.</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <h4 class="font-semibold">Checker, Lenco Textile Pvt LTD, Karachi</h4>
-        <p>Worked in the finishing department ensuring quality standards.</p>
-      </div>
-    </div>
+  <!-- ABOUT SECTION -->
+  <section id="about" class="section fixed inset-0 bg-white flex flex-col items-center justify-center p-6 text-center z-50">
+    <h2 class="text-3xl font-bold mb-4">About Me</h2>
+    <p class="max-w-2xl mb-6">I am Aftab Ahmed, pursuing a Bachelor's degree in Computer Science at Lasbela University DMJ Campus (12/2024 – 12/2028). Passionate about programming, data structures, and learning modern technology.</p>
+    <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="closeSection('about')">Close</button>
   </section>
 
-  <!-- Skills -->
-  <section id="skills" class="max-w-4xl mx-auto p-6 text-center fade">
-    <h3 class="text-2xl font-bold mb-4">Skills</h3>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-      <div class="bg-white p-3 rounded shadow">Python</div>
-      <div class="bg-white p-3 rounded shadow">C/C++</div>
-      <div class="bg-white p-3 rounded shadow">MySQL</div>
-      <div class="bg-white p-3 rounded shadow">MongoDB (Basics)</div>
-      <div class="bg-white p-3 rounded shadow">Data Structures</div>
-      <div class="bg-white p-3 rounded shadow">OOP</div>
-      <div class="bg-white p-3 rounded shadow">Communication</div>
-      <div class="bg-white p-3 rounded shadow">Time Management</div>
-    </div>
+  <!-- EDUCATION SECTION -->
+  <section id="education" class="section fixed inset-0 bg-white flex flex-col items-center justify-center p-6 text-center z-50">
+    <h2 class="text-3xl font-bold mb-4">Education</h2>
+    <p class="max-w-2xl mb-6">Lasbela University DMJ Campus (12/2024 – 12/2028)<br>Pursuing Bachelor's in Computer Science, focusing on programming, data structures, and technology fundamentals.</p>
+    <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="closeSection('education')">Close</button>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="max-w-4xl mx-auto p-6 text-center fade">
-    <h3 class="text-2xl font-bold mb-4">Contact Me</h3>
-    <p>Email: <a href="mailto:aftabrind310@gmail.com" class="text-blue-600 hover:underline">aftabrind310@gmail.com</a></p>
-    <p>Phone: 03473336405</p>
-    <div class="flex justify-center space-x-4 mt-2">
-      <a href="https://www.linkedin.com/in/Affirind310" class="hover:text-blue-600">LinkedIn</a>
-      <a href="https://github.com/affi71" class="hover:text-gray-700">GitHub</a>
-      <a href="https://www.instagram.com/_5alar71" class="hover:text-pink-600">Instagram</a>
+  <!-- EXPERIENCE & SKILLS SECTION -->
+  <section id="experience" class="section fixed inset-0 bg-white flex flex-col items-center justify-center p-6 text-center z-50">
+    <h2 class="text-3xl font-bold mb-4">Experience & Skills</h2>
+    <div class="max-w-2xl mb-6">
+      <p><strong>Teacher</strong> - Iqra Raztul Quran High School, Quetta</p>
+      <p><strong>Checker</strong> - Lenco Textile Pvt LTD, Karachi</p>
+      <p class="mt-4"><strong>Skills:</strong> Python, C/C++, MySQL, MongoDB, Data Structures, OOP, Communication, Time Management</p>
     </div>
+    <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="closeSection('experience')">Close</button>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-white text-center p-4 mt-8 shadow">
-    <p>© 2025 Aftab Ahmed. All rights reserved.</p>
-  </footer>
-
+  <!-- JAVASCRIPT FOR ANIMATIONS -->
   <script>
-    // Simple fade-in on scroll
-    const sections = document.querySelectorAll('.fade');
-    window.addEventListener('scroll', () => {
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-          section.classList.add('show');
-        }
-      });
-    });
-    window.dispatchEvent(new Event('scroll'));
+    function openSection(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function closeSection(id) {
+      document.getElementById(id).classList.remove('active');
+    }
   </script>
 
 </body>
-      </html>    <!-- PROJECTS -->
-    <section id="projects" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold">Projects</h2>
-        <div class="accent-line"></div>
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Example project cards - replace details with your projects -->
-        <article class="card p-4 reveal" data-reveal>
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-semibold">Project — Mini CMS</h3>
-              <div class="text-xs" style="color:var(--muted)">Python • Flask • MySQL</div>
-            </div>
-            <div class="text-sm neon-accent">Open</div>
-          </div>
-          <p class="mt-3 text-[--muted] text-sm">Small content management tool to manage articles and users. Built for learning backend fundamentals and auth.</p>
-          <div class="mt-4 flex gap-2">
-            <a href="https://github.com/affi71" class="text-xs card px-3 py-2 rounded-md">Source</a>
-            <a href="#" class="text-xs card px-3 py-2 rounded-md">Live</a>
-          </div>
-        </article>
-
-        <article class="card p-4 reveal" data-reveal>
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-semibold">Textile QC Tool (internal)</h3>
-              <div class="text-xs" style="color:var(--muted)">C++ • Tools</div>
-            </div>
-            <div class="text-sm neon-accent">Closed</div>
-          </div>
-          <p class="mt-3 text-[--muted] text-sm">Utility used in finishing department for simple checks and logging inspection results.</p>
-          <div class="mt-4 flex gap-2">
-            <a href="#" class="text-xs card px-3 py-2 rounded-md">Notes</a>
-          </div>
-        </article>
-
-        <article class="card p-4 reveal" data-reveal>
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-semibold">Algorithm Visualizer (study)</h3>
-              <div class="text-xs" style="color:var(--muted)">Python • Web</div>
-            </div>
-            <div class="text-sm neon-accent">WIP</div>
-          </div>
-          <p class="mt-3 text-[--muted] text-sm">Visualization of sorting and graph algorithms — educational project to practice DSA and UI basics.</p>
-          <div class="mt-4 flex gap-2">
-            <a href="#" class="text-xs card px-3 py-2 rounded-md">Repo</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold">Skills</h2>
-        <div class="accent-line"></div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="card p-5 reveal" data-reveal>
-          <h4 class="font-semibold">Technical</h4>
-          <div class="mt-4 space-y-4">
-            <!-- skill item -->
-            <div>
-              <div class="flex justify-between text-sm"><div>Python</div><div class="text-[--muted]">80%</div></div>
-              <div class="progress-track mt-2">
-                <div class="progress-fill" data-fill="80%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-sm"><div>C / C++</div><div class="text-[--muted]">70%</div></div>
-              <div class="progress-track mt-2">
-                <div class="progress-fill" data-fill="70%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-sm"><div>MySQL</div><div class="text-[--muted]">60%</div></div>
-              <div class="progress-track mt-2">
-                <div class="progress-fill" data-fill="60%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-sm"><div>MongoDB (Basics)</div><div class="text-[--muted]">45%</div></div>
-              <div class="progress-track mt-2">
-                <div class="progress-fill" data-fill="45%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-5 reveal" data-reveal>
-          <h4 class="font-semibold">Soft Skills & Languages</h4>
-          <div class="mt-4 text-[--muted]">
-            <ul class="list-disc pl-5 space-y-2">
-              <li>Communication</li>
-              <li>Time Management</li>
-              <li>Problem Solving</li>
-            </ul>
-
-            <div class="mt-4">
-              <div class="text-sm">Languages</div>
-              <div class="mt-2 flex gap-2 flex-wrap text-xs">
-                <span class="card px-3 py-1 rounded-md">English</span>
-                <span class="card px-3 py-1 rounded-md">Urdu</span>
-                <span class="card px-3 py-1 rounded-md">Balochi</span>
-                <span class="card px-3 py-1 rounded-md">Sindhi</span>
-                <span class="card px-3 py-1 rounded-md">Brahvi</span>
+</html>y-1 rounded-md">Brahvi</span>
                 <span class="card px-3 py-1 rounded-md">Saraiki</span>
               </div>
             </div>
