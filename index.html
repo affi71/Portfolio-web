@@ -1,246 +1,160 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aftab Ahmed - Portfolio</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">  <style>
-    :root{
-      --muted:#6b7280;
-      --accent:#2563eb;
-    }
+  <title>Aftab Ahmed - Portfolio</title>
 
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',system-ui,Arial,Helvetica,sans-serif; color:#111827;}
-    h1,h2,h3{font-family:'Poppins', 'Inter', sans-serif}
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    /* Reveal on scroll */
-    .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
-    .reveal.visible{opacity:1; transform:none}
+  <style>
+    body { font-family:'Inter', sans-serif; color:#111827; margin:0; }
+    h1,h2,h3 { font-family:'Poppins', sans-serif; }
 
-    /* Panel animation */
-    .panel-enter{opacity:0; transform:scale(.98) translateY(-6px)}
-    .panel-enter.panel-show{opacity:1; transform:scale(1) translateY(0); transition:opacity .18s ease, transform .18s ease}
+    /* Backgrounds */
+    #hero { background: linear-gradient(135deg,#f0f9ff,#f5f3ff); }
+    #about { background: linear-gradient(135deg,#fff7ed,#fffbeb); }
+    #education { background: linear-gradient(135deg,#eef2ff,#eef6ff); }
+    #experience { background: linear-gradient(135deg,#f0fdf4,#ecfdf5); }
+    #skills { background: linear-gradient(135deg,#f9fafb,#ffffff); }
+    #contact { background: linear-gradient(135deg,#fff1f2,#fff7fb); }
 
-    /* Card helper */
-    .card{background:#ffffff; border:1px solid rgba(0,0,0,.06); box-shadow:0 8px 24px rgba(15,23,42,.06);}
+    /* Reveal animation */
+    .reveal { opacity:0; transform:translateY(20px); transition:all .6s ease; }
+    .reveal.visible { opacity:1; transform:none; }
 
-    /* Section spacing */
-    section{scroll-margin-top:84px}
+    /* Hamburger menu lines */
+    .hamburger span { display:block; width:24px; height:3px; margin:4px auto; background:#111827; transition:.3s; border-radius:3px; }
+    .hamburger.open .line1 { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.open .line2 { opacity:0; }
+    .hamburger.open .line3 { transform:rotate(-45deg) translate(5px,-5px); }
 
-    /* Backgrounds per section */
-    #hero{background:linear-gradient(135deg,#f0f9ff 0%, #f5f3ff 100%)}
-    #about{background:linear-gradient(135deg,#fff7ed 0%, #fffbeb 100%)}
-    #education{background:linear-gradient(135deg,#eef2ff 0%, #eef6ff 100%)}
-    #experience{background:linear-gradient(135deg,#f0fdf4 0%, #ecfdf5 100%)}
-    #skills{background:linear-gradient(135deg,#f9fafb 0%, #ffffff 100%)}
-    #contact{background:linear-gradient(135deg,#fff1f2 0%, #fff7fb 100%)}
+    /* Menu overlay */
+    #menuOverlay { background:rgba(0,0,0,0.3); backdrop-filter:blur(4px); }
+    nav { background:#fff; border-radius:8px; padding:10px; box-shadow:0 8px 24px rgba(0,0,0,0.1); }
+    nav a { display:block; padding:8px 12px; border-radius:6px; text-decoration:none; color:#111827; }
+    nav a:hover { background:#f3f4f6; }
+  </style>
+</head>
+<body>
 
-    /* Small visual touches */
-    .dot-menu{width:46px; height:34px; display:flex; flex-direction:column; justify-content:center; gap:5px}
-    .dot-menu span{display:block; height:3px; border-radius:999px; background:#111827; transition:transform .2s ease, width .2s ease}
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full bg-white shadow-sm flex justify-between items-center px-6 py-3 z-50">
+    <h1 class="text-lg font-semibold">Aftab Ahmed</h1>
+    <button id="menuBtn" aria-label="Menu" class="hamburger">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </button>
+  </header>
 
-    /* when open, animate lines to X */
-    .open .l1{transform:translateY(8px) rotate(45deg)}
-    .open .l2{opacity:0}
-    .open .l3{transform:translateY(-8px) rotate(-45deg)}
-  </style></head>
-<body class="min-h-screen">  <!-- Header with three-line (hamburger) button -->  <header class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#hero" class="font-semibold tracking-tight">Aftab Ahmed</a>
-      <button id="menuBtn" aria-expanded="false" aria-controls="menuOverlay" class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" title="Menu">
-        <!-- three lines (hamburger) -->
-        <div class="dot-menu" aria-hidden="true">
-          <span class="l1"></span>
-          <span class="l2"></span>
-          <span class="l3"></span>
-        </div>
-      </button>
-    </div>
-  </header>  <!-- Overlay Menu -->  <div id="menuOverlay" class="fixed inset-0 z-40 hidden">
-    <div id="menuBackdrop" class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
-    <nav class="absolute right-4 top-16 w-64 card rounded-xl p-3 panel-enter" role="menu" aria-label="Section menu">
-      <a href="#about" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">About</a>
-      <a href="#education" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Education</a>
-      <a href="#experience" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Experience</a>
-      <a href="#skills" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Skills</a>
-      <a href="#contact" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Contact</a>
+  <!-- Menu Overlay -->
+  <div id="menuOverlay" class="hidden fixed inset-0 flex items-start justify-end p-4 z-40">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
     </nav>
-  </div>  <!-- HERO -->  <section id="hero" class="pt-28 pb-12">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
-      <div class="reveal">
-        <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Hi, I'm <span class="text-blue-600">Aftab Ahmed</span></h1>
-        <p class="mt-3 text-gray-600">Computer Science Student | Exploring Programming & Modern Technology</p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#contact" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">Contact</a>
-          <a href="#projects" class="px-4 py-2 rounded-lg border border-gray-200 hover:bg-white transition">Projects</a>
-        </div>
-      </div>
-      <div class="reveal">
-        <!-- Photo placeholder (add your src later) -->
-        <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full mx-auto bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center text-gray-500">Your Photo</div>
-      </div>
-    </div>
-  </section>  <!-- ABOUT -->  <section id="about" class="py-12">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="card rounded-2xl p-6 reveal">
-        <h2 class="text-xl font-semibold">About</h2>
-        <p class="mt-3 text-gray-600">I am Aftab Ahmed, pursuing a Bachelor's degree in Computer Science at Lasbela University DMJ Campus (12/2024 – 12/2028). Passionate about programming, data structures, OOP and the foundations of modern technology.</p>
-      </div>
-    </div>
-  </section>  <!-- EDUCATION -->  <section id="education" class="py-12">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6">
-      <div class="card rounded-2xl p-6 reveal">
-        <h3 class="font-semibold">Lasbela University DMJ Campus</h3>
-        <p class="text-sm text-gray-600 mt-1">Bachelor of Computer Science (12/2024 – 12/2028)</p>
-        <p class="mt-3 text-gray-600">Focusing on programming, data structures, algorithms and technology fundamentals.</p>
-      </div>
-      <div class="card rounded-2xl p-6 reveal">
-        <h3 class="font-semibold">Highlights</h3>
-        <ul class="mt-2 text-gray-600 list-disc pl-5 space-y-1">
-          <li>Strong interest in DSA & OOP</li>
-          <li>Learning database basics: MySQL & MongoDB</li>
-        </ul>
-      </div>
-    </div>
-  </section>  <!-- EXPERIENCE -->  <section id="experience" class="py-12">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6">
-      <div class="card rounded-2xl p-6 reveal">
-        <h3 class="font-semibold">Professional Experience</h3>
-        <ul class="mt-2 text-gray-600 space-y-2">
-          <li><strong>Teacher</strong> — Iqra Raztul Quran High School, Quetta</li>
-          <li><strong>Checker</strong> — Lenco Textile Pvt LTD, Karachi</li>
-        </ul>
-      </div>
-      <div class="card rounded-2xl p-6 reveal">
-        <h3 class="font-semibold">Languages</h3>
-        <div class="mt-3 flex flex-wrap gap-2 text-sm">
-          <span class="px-3 py-1 rounded-full border">English</span>
-          <span class="px-3 py-1 rounded-full border">Urdu</span>
-          <span class="px-3 py-1 rounded-full border">Balochi</span>
-          <span class="px-3 py-1 rounded-full border">Sindhi</span>
-          <span class="px-3 py-1 rounded-full border">Brahvi</span>
-          <span class="px-3 py-1 rounded-full border">Saraiki</span>
-        </div>
-      </div>
-    </div>
-  </section>  <!-- SKILLS -->  <section id="skills" class="py-12">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6">
-      <div class="card rounded-2xl p-6 reveal">
-        <h3 class="font-semibold">Technical Skills</h3>
-        <div class="mt-4 space-y-4">
-          <div>
-            <div class="flex justify-between text-sm"><span>Python</span><span class="text-gray-500">80%</span></div>
-            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
-              <div class="h-2 bg-blue-600 rounded-full" style="width:80%"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-sm"><span>C / C++</span><span class="text-gray-500">70%</span></div>
-            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
-              <div class="h-2 bg-blue-600 rounded-full" style="width:70%"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-sm"><span>MySQL</span><span class="text-gray-500">60%</span></div>
-            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
-              <div class="h-2 bg-blue-600 rounded-full" style="width:60%"></div>
-            </div>
-          </div>
-          <div>
-            <div class="flex justify-between text-sm"><span>MongoDB (Basics)</span><span class="text-gray-500">45%</span></div>
-            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
-              <div class="h-2 bg-blue-600 rounded-full" style="width:45%"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card rounded-2xl p-6 reveal">
-        <h3 class="font-semibold">Soft Skills</h3>
-        <ul class="mt-3 text-gray-600 list-disc pl-5 space-y-1">
-          <li>Communication</li>
-          <li>Time Management</li>
-          <li>Problem Solving</li>
-        </ul>
-      </div>
-    </div>
-  </section>  <!-- CONTACT -->  <section id="contact" class="py-12">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="card rounded-2xl p-6 reveal">
-        <h3 class="font-semibold">Contact</h3>
-        <div class="mt-3 text-gray-600 text-sm">
-          <p>Email: <a class="text-blue-600 hover:underline" href="mailto:aftabrind310@gmail.com">aftabrind310@gmail.com</a></p>
-          <p>Phone: 03473336405</p>
-          <div class="mt-2 flex flex-wrap gap-4">
-            <a href="https://www.linkedin.com/in/Affirind310" class="hover:text-blue-600" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://github.com/affi71" class="hover:text-gray-900" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://www.instagram.com/_5alar71" class="hover:text-pink-600" target="_blank" rel="noopener">Instagram</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>  <footer class="py-8 text-center text-sm text-gray-500">© 2025 Aftab Ahmed</footer>  <script>
-    // IntersectionObserver reveals
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
-    }, {threshold:.12});
-    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  </div>
 
-    // Three-lines (hamburger) menu logic
-    const btn = document.getElementById('menuBtn');
-    const overlay = document.getElementById('menuOverlay');
-    const panel = overlay.querySelector('nav');
-    const backdrop = document.getElementById('menuBackdrop');
+  <!-- Hero -->
+  <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
+    <h2 class="text-4xl font-bold mb-4">Hi, I'm <span class="text-blue-600">Aftab Ahmed</span></h2>
+    <p class="mb-6">Computer Science Student | Exploring Programming & Modern Technology</p>
+    <div class="w-40 h-40 rounded-full bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center mb-6">Your Photo</div>
+    <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Contact Me</a>
+  </section>
 
-    function openMenu(){
-      overlay.classList.remove('hidden');
-      requestAnimationFrame(()=> panel.classList.add('panel-show'));
-      btn.setAttribute('aria-expanded','true');
-      btn.classList.add('open');
-    }
-    function closeMenu(){
-      panel.classList.remove('panel-show');
-      setTimeout(()=> overlay.classList.add('hidden'), 120);
-      btn.setAttribute('aria-expanded','false');
-      btn.classList.remove('open');
-    }
+  <!-- About -->
+  <section id="about" class="p-8">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <h3 class="text-2xl font-bold mb-3">About Me</h3>
+      <p>I am Aftab Ahmed, pursuing a Bachelor's degree in Computer Science at Lasbela University DMJ Campus (12/2024 – 12/2028). Passionate about programming, data structures, OOP, and modern technology.</p>
+    </div>
+  </section>
 
-    btn.addEventListener('click', ()=>{
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      expanded ? closeMenu() : openMenu();
+  <!-- Education -->
+  <section id="education" class="p-8">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <h3 class="text-2xl font-bold mb-3">Education</h3>
+      <p>Lasbela University DMJ Campus (12/2024 – 12/2028) – Bachelor's in Computer Science focusing on programming, data structures, and technology fundamentals.</p>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="p-8">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <h3 class="text-2xl font-bold mb-3">Experience</h3>
+      <p><strong>Teacher</strong> at Iqra Raztul Quran High School, Quetta<br><strong>Checker</strong> at Lenco Textile Pvt LTD, Karachi</p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="p-8">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <h3 class="text-2xl font-bold mb-3">Skills</h3>
+      <p>Python, C/C++, MySQL, MongoDB, Data Structures, OOP, Communication, Time Management</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="p-8">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <h3 class="text-2xl font-bold mb-3">Contact</h3>
+      <p>Email: <a href="mailto:aftabrind310@gmail.com" class="text-blue-600">aftabrind310@gmail.com</a></p>
+      <p>Phone: 03473336405</p>
+      <p class="mt-2"><a href="https://www.linkedin.com/in/Affirind310" target="_blank" class="text-blue-600">LinkedIn</a> | <a href="https://github.com/affi71" target="_blank" class="text-gray-800">GitHub</a> | <a href="https://www.instagram.com/_5alar71" target="_blank" class="text-pink-600">Instagram</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center p-4 text-gray-600 text-sm">© 2025 Aftab Ahmed</footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Reveal on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Hamburger menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('open');
+      menuOverlay.classList.toggle('hidden');
     });
-    backdrop.addEventListener('click', closeMenu);
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
 
-    // Smooth scroll for menu links and close on click
-    overlay.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
+    // Close menu when link clicked
+    menuOverlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if(target){ target.scrollIntoView({behavior:'smooth'}); }
-        closeMenu();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        menuBtn.classList.remove('open');
+        menuOverlay.classList.add('hidden');
       });
     });
-  </script></body>
-  </html>el-show');
-      setTimeout(()=> overlay.classList.add('hidden'), 120);
-      btn.setAttribute('aria-expanded','false');
-    }
 
-    btn.addEventListener('click', ()=>{
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      expanded ? closeMenu() : openMenu();
+    // Close on ESC
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        menuBtn.classList.remove('open');
+        menuOverlay.classList.add('hidden');
+      }
     });
-    backdrop.addEventListener('click', closeMenu);
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+  </script>
 
-    // Smooth scroll for menu links and close on click
-    overlay.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if(target){ target.scrollIntoView({behavior:'smooth'}); }
-        closeMenu();
-      });
-    });
-  </script></body>
-          </html>
+</body>
+        </html>
