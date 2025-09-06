@@ -1,210 +1,203 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aftab Ahmed - Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    html { scroll-behavior: smooth; }
-    body { background: linear-gradient(to bottom right, #e0f2fe, #ede9fe); }
-    .section {
-      display: none;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.6s ease;
+    :root{
+      --muted:#6b7280;
+      --accent:#2563eb;
     }
-    .section.active {
-      display: block;
-      opacity: 1;
-      transform: scale(1);
-    }
-    .menu-btn {
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    .menu-btn:hover {
-      transform: scale(1.05);
-      background: #3b82f6;
-      color: white;
-    }
+    html{scroll-behavior:smooth}
+    body{background:linear-gradient(135deg,#eef2ff, #e0f2fe); color:#111827}
+    /* Reveal on scroll */
+    .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.visible{opacity:1; transform:none}
+    /* Three-dots menu panel */
+    .panel-enter{opacity:0; transform:scale(.96) translateY(-4px)}
+    .panel-enter.panel-show{opacity:1; transform:scale(1) translateY(0); transition:opacity .18s ease, transform .18s ease}
+    /* Card helper */
+    .card{background:#ffffff; border:1px solid rgba(0,0,0,.06); box-shadow:0 8px 24px rgba(15,23,42,.06);}
+    /* Section spacing */
+    section{scroll-margin-top:84px}
   </style>
 </head>
-<body class="font-sans text-gray-800">
-
-  <!-- HERO SECTION -->
-  <section id="hero" class="h-screen flex flex-col justify-center items-center text-center">
-    <h1 class="text-4xl font-bold mb-4">Aftab Ahmed</h1>
-    <p class="text-lg mb-8">Computer Science Student | Exploring Programming & Modern Technology</p>
-    
-    <!-- MENU BUTTONS -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-xl w-full px-4">
-      <button class="menu-btn px-6 py-4 bg-white rounded shadow text-lg font-semibold" onclick="openSection('about')">About</button>
-      <button class="menu-btn px-6 py-4 bg-white rounded shadow text-lg font-semibold" onclick="openSection('education')">Education</button>
-      <button class="menu-btn px-6 py-4 bg-white rounded shadow text-lg font-semibold" onclick="openSection('experience')">Experience & Skills</button>
+<body class="font-sans min-h-screen">
+  <!-- Header with three dots -->
+  <header class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#hero" class="font-semibold tracking-tight">Aftab Ahmed</a>
+      <button id="menuBtn" aria-expanded="false" aria-controls="menuOverlay" class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" title="Menu">
+        <!-- three dots icon -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="5" cy="12" r="2" fill="#111827"/>
+          <circle cx="12" cy="12" r="2" fill="#111827"/>
+          <circle cx="19" cy="12" r="2" fill="#111827"/>
+        </svg>
+      </button>
     </div>
-  </section>
-
-  <!-- ABOUT SECTION -->
-  <section id="about" class="section fixed inset-0 bg-white flex flex-col items-center justify-center p-6 text-center z-50">
-    <h2 class="text-3xl font-bold mb-4">About Me</h2>
-    <p class="max-w-2xl mb-6">I am Aftab Ahmed, pursuing a Bachelor's degree in Computer Science at Lasbela University DMJ Campus (12/2024 – 12/2028). Passionate about programming, data structures, and learning modern technology.</p>
-    <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="closeSection('about')">Close</button>
-  </section>
-
-  <!-- EDUCATION SECTION -->
-  <section id="education" class="section fixed inset-0 bg-white flex flex-col items-center justify-center p-6 text-center z-50">
-    <h2 class="text-3xl font-bold mb-4">Education</h2>
-    <p class="max-w-2xl mb-6">Lasbela University DMJ Campus (12/2024 – 12/2028)<br>Pursuing Bachelor's in Computer Science, focusing on programming, data structures, and technology fundamentals.</p>
-    <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="closeSection('education')">Close</button>
-  </section>
-
-  <!-- EXPERIENCE & SKILLS SECTION -->
-  <section id="experience" class="section fixed inset-0 bg-white flex flex-col items-center justify-center p-6 text-center z-50">
-    <h2 class="text-3xl font-bold mb-4">Experience & Skills</h2>
-    <div class="max-w-2xl mb-6">
-      <p><strong>Teacher</strong> - Iqra Raztul Quran High School, Quetta</p>
-      <p><strong>Checker</strong> - Lenco Textile Pvt LTD, Karachi</p>
-      <p class="mt-4"><strong>Skills:</strong> Python, C/C++, MySQL, MongoDB, Data Structures, OOP, Communication, Time Management</p>
+  </header>  <!-- Overlay Menu -->  <div id="menuOverlay" class="fixed inset-0 z-40 hidden">
+    <div id="menuBackdrop" class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+    <nav class="absolute right-4 top-16 w-64 card rounded-xl p-3 panel-enter" role="menu" aria-label="Section menu">
+      <a href="#about" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">About</a>
+      <a href="#education" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Education</a>
+      <a href="#experience" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Experience</a>
+      <a href="#skills" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Skills</a>
+      <a href="#contact" class="block px-3 py-2 rounded-lg hover:bg-gray-50" role="menuitem">Contact</a>
+    </nav>
+  </div>  <!-- HERO -->  <section id="hero" class="pt-28 pb-12">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+      <div class="reveal">
+        <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Hi, I'm <span class="text-blue-600">Aftab Ahmed</span></h1>
+        <p class="mt-3 text-gray-600">Computer Science Student | Exploring Programming & Modern Technology</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#contact" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">Contact</a>
+          <a href="#projects" class="px-4 py-2 rounded-lg border border-gray-200 hover:bg-white transition">Projects</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <!-- Photo placeholder (add your src later) -->
+        <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full mx-auto bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center text-gray-500">Your Photo</div>
+      </div>
     </div>
-    <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="closeSection('experience')">Close</button>
-  </section>
+  </section>  <!-- ABOUT -->  <section id="about" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="card rounded-2xl p-6 reveal">
+        <h2 class="text-xl font-semibold">About</h2>
+        <p class="mt-3 text-gray-600">I am Aftab Ahmed, pursuing a Bachelor's degree in Computer Science at Lasbela University DMJ Campus (12/2024 – 12/2028). Passionate about programming, data structures, OOP and the foundations of modern technology.</p>
+      </div>
+    </div>
+  </section>  <!-- EDUCATION -->  <section id="education" class="py-12">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6">
+      <div class="card rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Lasbela University DMJ Campus</h3>
+        <p class="text-sm text-gray-600 mt-1">Bachelor of Computer Science (12/2024 – 12/2028)</p>
+        <p class="mt-3 text-gray-600">Focusing on programming, data structures, algorithms and technology fundamentals.</p>
+      </div>
+      <div class="card rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Highlights</h3>
+        <ul class="mt-2 text-gray-600 list-disc pl-5 space-y-1">
+          <li>Strong interest in DSA & OOP</li>
+          <li>Learning database basics: MySQL & MongoDB</li>
+        </ul>
+      </div>
+    </div>
+  </section>  <!-- EXPERIENCE -->  <section id="experience" class="py-12">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6">
+      <div class="card rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Professional Experience</h3>
+        <ul class="mt-2 text-gray-600 space-y-2">
+          <li><strong>Teacher</strong> — Iqra Raztul Quran High School, Quetta</li>
+          <li><strong>Checker</strong> — Lenco Textile Pvt LTD, Karachi</li>
+        </ul>
+      </div>
+      <div class="card rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Languages</h3>
+        <div class="mt-3 flex flex-wrap gap-2 text-sm">
+          <span class="px-3 py-1 rounded-full border">English</span>
+          <span class="px-3 py-1 rounded-full border">Urdu</span>
+          <span class="px-3 py-1 rounded-full border">Balochi</span>
+          <span class="px-3 py-1 rounded-full border">Sindhi</span>
+          <span class="px-3 py-1 rounded-full border">Brahvi</span>
+          <span class="px-3 py-1 rounded-full border">Saraiki</span>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- SKILLS -->  <section id="skills" class="py-12">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6">
+      <div class="card rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Technical Skills</h3>
+        <div class="mt-4 space-y-4">
+          <div>
+            <div class="flex justify-between text-sm"><span>Python</span><span class="text-gray-500">80%</span></div>
+            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
+              <div class="h-2 bg-blue-600 rounded-full" style="width:80%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm"><span>C / C++</span><span class="text-gray-500">70%</span></div>
+            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
+              <div class="h-2 bg-blue-600 rounded-full" style="width:70%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm"><span>MySQL</span><span class="text-gray-500">60%</span></div>
+            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
+              <div class="h-2 bg-blue-600 rounded-full" style="width:60%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm"><span>MongoDB (Basics)</span><span class="text-gray-500">45%</span></div>
+            <div class="w-full h-2 bg-gray-100 rounded-full mt-2 overflow-hidden">
+              <div class="h-2 bg-blue-600 rounded-full" style="width:45%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Soft Skills</h3>
+        <ul class="mt-3 text-gray-600 list-disc pl-5 space-y-1">
+          <li>Communication</li>
+          <li>Time Management</li>
+          <li>Problem Solving</li>
+        </ul>
+      </div>
+    </div>
+  </section>  <!-- CONTACT -->  <section id="contact" class="py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="card rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Contact</h3>
+        <div class="mt-3 text-gray-600 text-sm">
+          <p>Email: <a class="text-blue-600 hover:underline" href="mailto:aftabrind310@gmail.com">aftabrind310@gmail.com</a></p>
+          <p>Phone: 03473336405</p>
+          <div class="mt-2 flex flex-wrap gap-4">
+            <a href="https://www.linkedin.com/in/Affirind310" class="hover:text-blue-600" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/affi71" class="hover:text-gray-900" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.instagram.com/_5alar71" class="hover:text-pink-600" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  <footer class="py-8 text-center text-sm text-gray-500">© 2025 Aftab Ahmed</footer>  <script>
+    // IntersectionObserver reveals
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-  <!-- JAVASCRIPT FOR ANIMATIONS -->
-  <script>
-    function openSection(id) {
-      document.getElementById(id).classList.add('active');
+    // Three-dots menu logic
+    const btn = document.getElementById('menuBtn');
+    const overlay = document.getElementById('menuOverlay');
+    const panel = overlay.querySelector('nav');
+    const backdrop = document.getElementById('menuBackdrop');
+
+    function openMenu(){
+      overlay.classList.remove('hidden');
+      requestAnimationFrame(()=> panel.classList.add('panel-show'));
+      btn.setAttribute('aria-expanded','true');
     }
-    function closeSection(id) {
-      document.getElementById(id).classList.remove('active');
+    function closeMenu(){
+      panel.classList.remove('panel-show');
+      setTimeout(()=> overlay.classList.add('hidden'), 120);
+      btn.setAttribute('aria-expanded','false');
     }
-  </script>
 
-</body>
-</html>y-1 rounded-md">Brahvi</span>
-                <span class="card px-3 py-1 rounded-md">Saraiki</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE / EDUCATION TIMELINE -->
-    <section id="experience" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold">Experience & Education</h2>
-        <div class="accent-line"></div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="card p-5 reveal" data-reveal>
-          <h4 class="font-semibold">Professional Experience</h4>
-          <div class="mt-4 space-y-4 text-[--muted]">
-            <div>
-              <div class="font-medium">Teacher — Iqra Raztul Quran High School, Quetta</div>
-              <div class="text-xs">Contributed to teaching and academic growth.</div>
-            </div>
-            <div>
-              <div class="font-medium">Checker — Lenco Textile Pvt LTD, Karachi</div>
-              <div class="text-xs">Finished department quality checks and reporting.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-5 reveal" data-reveal>
-          <h4 class="font-semibold">Education</h4>
-          <div class="mt-4 text-[--muted]">
-            <div class="font-medium">Lasbela University DMJ Campus</div>
-            <div class="text-xs">Bachelor of Computer Science (12/2024 – 12/2028)</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
-      <div class="card p-6 reveal" data-reveal>
-        <h3 class="text-lg font-semibold">Get in touch</h3>
-        <div class="accent-line"></div>
-
-        <div class="mt-4 grid md:grid-cols-2 gap-6">
-          <form id="contactForm" class="space-y-4">
-            <div>
-              <label class="text-xs">Name</label>
-              <input required name="name" class="w-full mt-2 p-3 rounded-md bg-transparent border border-white/6" placeholder="Your name" />
-            </div>
-            <div>
-              <label class="text-xs">Email</label>
-              <input required type="email" name="email" class="w-full mt-2 p-3 rounded-md bg-transparent border border-white/6" placeholder="you@example.com" />
-            </div>
-            <div>
-              <label class="text-xs">Message</label>
-              <textarea required name="message" rows="4" class="w-full mt-2 p-3 rounded-md bg-transparent border border-white/6" placeholder="Brief message"></textarea>
-            </div>
-            <div>
-              <button type="submit" class="px-4 py-2 rounded-md card">Send message</button>
-            </div>
-          </form>
-
-          <div class="text-[--muted]">
-            <div class="mb-4">
-              <strong>Email</strong><br/>
-              <a class="neon-accent" href="mailto:aftabrind310@gmail.com">aftabrind310@gmail.com</a>
-            </div>
-            <div class="mb-4">
-              <strong>Phone</strong><br/>
-              03473336405
-            </div>
-            <div class="mb-4">
-              <strong>Links</strong><br/>
-              <a href="https://www.linkedin.com/in/Affirind310" target="_blank">LinkedIn</a> •
-              <a href="https://github.com/affi71" target="_blank">GitHub</a> •
-              <a href="https://www.instagram.com/_5alar71" target="_blank">Instagram</a>
-            </div>
-
-            <div class="mt-6 text-sm" style="color:var(--muted)">
-              © 2025 Aftab Ahmed — Built with HTML, Tailwind. Hosted on GitHub Pages.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    // Mobile menu
-    const mobileBtn = document.getElementById('mobileBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const iconOpen = document.getElementById('iconOpen');
-    const iconClose = document.getElementById('iconClose');
-    mobileBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      iconOpen.classList.toggle('hidden');
-      iconClose.classList.toggle('hidden');
+    btn.addEventListener('click', ()=>{
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      expanded ? closeMenu() : openMenu();
     });
+    backdrop.addEventListener('click', closeMenu);
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
 
-    // Reveal on scroll using IntersectionObserver
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, {threshold: 0.12});
-
-    document.querySelectorAll('[data-reveal]').forEach(el => {
-      el.classList.add('reveal');
-      observer.observe(el);
-    });
-
-    // Animate skill bars
-    window.addEventListener('load', () => {
-      document.querySelectorAll('.progress-fill').forEach(el => {
-        const val = el.getAttribute('data-fill') || '0%';
-        setTimeout(() => { el.style.width = val; }, 300);
+    // Smooth scroll for menu links and close on click
+    overlay.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target){ target.scrollIntoView({behavior:'smooth'}); }
+        closeMenu();
       });
     });
-
-    // Simple form handler (client-side only; it opens mail client by fallback)
-    document.getElementById('contactForm').addEventListener('submit
+  </script></body>
+          </html>
