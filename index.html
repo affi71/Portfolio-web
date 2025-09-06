@@ -1,110 +1,455 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aftab Ahmed - Portfolio</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aftab Ahmed — Portfolio</title>
+  <meta name="description" content="Aftab Ahmed — Computer Science student. Portfolio: projects, skills, experience, contact." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CDN (fast for prototypes / portfolios) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    html { scroll-behavior: smooth; }
-    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
-    .fade.show { opacity: 1; transform: translateY(0); }
+    :root{
+      --bg:#05060b;
+      --card:#0b1020;
+      --muted:#9aa4bd;
+      --accent-a:#00e5ff;
+      --accent-b:#7c4dff;
+    }
+    html,body{height:100%}
+    body{
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg,#03040a 0%, #071023 60%);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Animated hero gradient */
+    .hero-gradient{
+      background: radial-gradient(800px 300px at 10% 20%, rgba(124,77,255,0.12), transparent 10%),
+                  radial-gradient(600px 240px at 90% 80%, rgba(0,229,255,0.08), transparent 10%);
+      position: relative;
+      overflow: hidden;
+    }
+    .neon-accent{
+      background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* soft glass card */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+      backdrop-filter: blur(6px);
+    }
+
+    /* small accent line under headings */
+    .accent-line{
+      height:4px; width:56px; border-radius:8px;
+      background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
+      margin-top:8px;
+    }
+
+    /* reveal animation helpers */
+    .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.visible{opacity:1; transform:none}
+
+    /* progress bar */
+    .progress-track{background:rgba(255,255,255,0.06); height:10px; border-radius:999px}
+    .progress-fill{height:10px; border-radius:999px; background:linear-gradient(90deg,var(--accent-a),var(--accent-b)); width:0}
+
+    /* mobile nav */
+    .nav-toggle:focus{outline:none}
   </style>
 </head>
-<body class="font-sans bg-gray-50 text-gray-800">
-  <nav class="fixed w-full bg-white shadow-md z-10">
-    <div class="max-w-5xl mx-auto p-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold">Aftab Ahmed</h1>
-      <div class="space-x-4">
-        <a href="#about" class="hover:text-blue-600">About</a>
-        <a href="#education" class="hover:text-blue-600">Education</a>
-        <a href="#experience" class="hover:text-blue-600">Experience</a>
-        <a href="#skills" class="hover:text-blue-600">Skills</a>
-        <a href="#languages" class="hover:text-blue-600">Languages</a>
-        <a href="#contact" class="hover:text-blue-600">Contact</a>
+<body>
+
+  <!-- NAV -->
+  <header class="fixed inset-x-0 top-3 z-40 px-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center card">
+          <!-- simple logo -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="4" stroke="url(#g1)" stroke-width="1.6"/>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset="1" stop-color="#7C4DFF"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="text-sm">
+          <div class="font-semibold">Aftab Ahmed</div>
+          <div class="text-xs text-[--muted]" style="color:var(--muted)">Computer Science Student</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#about" class="hover:opacity-90 transition">About</a>
+        <a href="#projects" class="hover:opacity-90 transition">Projects</a>
+        <a href="#skills" class="hover:opacity-90 transition">Skills</a>
+        <a href="#experience" class="hover:opacity-90 transition">Experience</a>
+        <a href="#contact" class="px-4 py-2 rounded-md card hover:scale-[1.02] transition">Contact</a>
+      </nav>
+
+      <!-- mobile menu button -->
+      <div class="md:hidden">
+        <button id="mobileBtn" class="nav-toggle p-2 card">
+          <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#e6eef8" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" class="hidden"><path d="M6 6l12 12M6 18L18 6" stroke="#e6eef8" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
       </div>
     </div>
-  </nav>
 
-  <section id="hero" class="h-screen flex flex-col justify-center items-center text-center bg-gradient-to-r from-blue-100 to-purple-100">
-    <h2 class="text-4xl font-bold mb-2 fade">Aftab Ahmed</h2>
-    <p class="text-lg mb-4 fade">Computer Science Student | Exploring Programming & Modern Technology</p>
-    <a href="#contact" class="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">Contact Me</a>
-  </section>
-
-  <section id="about" class="max-w-4xl mx-auto p-6 text-center fade">
-    <h3 class="text-2xl font-bold mb-4">About Me</h3>
-    <p>I am Aftab Ahmed, pursuing a Bachelor's degree in Computer Science at Lasbela University DMJ Campus (12/2024 – 12/2028). I am passionate about programming, data structures, and learning the foundations of modern technology.</p>
-  </section>
-
-  <section id="education" class="max-w-4xl mx-auto p-6 fade">
-    <h3 class="text-2xl font-bold mb-4">Education</h3>
-    <div class="bg-white p-4 rounded-xl shadow-md">
-      <h4 class="font-semibold">Lasbela University DMJ Campus (12/2024 – 12/2028)</h4>
-      <p>Pursuing a Bachelor's degree in Computer Science, exploring programming, data structures, and technology fundamentals.</p>
-    </div>
-  </section>
-
-  <section id="experience" class="max-w-4xl mx-auto p-6 fade">
-    <h3 class="text-2xl font-bold mb-4">Professional Experience</h3>
-    <div class="space-y-4">
-      <div class="bg-white p-4 rounded-xl shadow-md">
-        <h4 class="font-semibold">Teacher, Iqra Raztul Quran High School, Quetta</h4>
-        <p>Worked as a teacher, contributing to academic growth and learning.</p>
-      </div>
-      <div class="bg-white p-4 rounded-xl shadow-md">
-        <h4 class="font-semibold">Checker, Lenco Textile Pvt LTD, Karachi</h4>
-        <p>Worked in the finishing department ensuring quality standards.</p>
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="hidden mt-3 max-w-6xl mx-auto card p-4 md:hidden rounded-md">
+      <div class="flex flex-col gap-3 text-sm">
+        <a href="#about" class="block">About</a>
+        <a href="#projects" class="block">Projects</a>
+        <a href="#skills" class="block">Skills</a>
+        <a href="#experience" class="block">Experience</a>
+        <a href="#contact" class="block">Contact</a>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section id="skills" class="max-w-4xl mx-auto p-6 text-center fade">
-    <h3 class="text-2xl font-bold mb-4">Skills</h3>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-      <div class="bg-white p-3 rounded-xl shadow">Python</div>
-      <div class="bg-white p-3 rounded-xl shadow">C/C++</div>
-      <div class="bg-white p-3 rounded-xl shadow">MySQL</div>
-      <div class="bg-white p-3 rounded-xl shadow">MongoDB (Basics)</div>
-      <div class="bg-white p-3 rounded-xl shadow">Data Structures</div>
-      <div class="bg-white p-3 rounded-xl shadow">OOP</div>
-      <div class="bg-white p-3 rounded-xl shadow">Communication</div>
-      <div class="bg-white p-3 rounded-xl shadow">Time Management</div>
-    </div>
-  </section>
+  <!-- HERO -->
+  <main>
+    <section id="hero" class="hero-gradient pt-28 pb-20 md:pb-36">
+      <div class="max-w-6xl mx-auto px-6 md:px-0 flex flex-col md:flex-row items-center gap-10">
+        <div class="md:w-1/2 reveal" data-reveal>
+          <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">
+            Hi, I’m <span class="neon-accent">Aftab Ahmed</span><br/>
+            <span class="text-lg font-medium" style="color:var(--muted)">Computer Science student — building reliable software and learning new tech</span>
+          </h1>
 
-  <section id="languages" class="max-w-4xl mx-auto p-6 text-center fade">
-    <h3 class="text-2xl font-bold mb-4">Languages</h3>
-    <p>English, Urdu, Balochi, Sindhi, Brahvi, Saraiki</p>
-  </section>
+          <div class="mt-6 flex gap-3 items-center">
+            <a href="#contact" class="px-5 py-3 rounded-md card hover:scale-[1.02] transition">
+              Contact me
+            </a>
+            <a href="#projects" class="px-4 py-3 rounded-md card/secondary hover:scale-[1.02] transition">
+              View projects
+            </a>
+          </div>
 
-  <section id="contact" class="max-w-4xl mx-auto p-6 text-center fade">
-    <h3 class="text-2xl font-bold mb-4">Contact Me</h3>
-    <p>Email: <a href="mailto:aftabrind310@gmail.com" class="text-blue-600 hover:underline">aftabrind310@gmail.com</a></p>
-    <p>Phone: 03473336405</p>
-    <div class="flex justify-center space-x-4 mt-2">
-      <a href="https://www.linkedin.com/in/Affirind310" class="hover:text-blue-600">LinkedIn</a>
-      <a href="https://github.com/affi71" class="hover:text-gray-700">GitHub</a>
-      <a href="https://www.instagram.com/_5alar71" class="hover:text-pink-600">Instagram</a>
-      <a href="https://www.luawms.edu.pk/" class="hover:text-green-600">University</a>
-    </div>
-  </section>
+          <div class="mt-8 flex flex-wrap gap-3 text-xs">
+            <span class="card px-3 py-2 rounded-full">Python</span>
+            <span class="card px-3 py-2 rounded-full">C / C++</span>
+            <span class="card px-3 py-2 rounded-full">MySQL</span>
+            <span class="card px-3 py-2 rounded-full">MongoDB (Basics)</span>
+          </div>
+        </div>
 
-  <footer class="bg-gray-100 text-center p-4 mt-8">
-    <p>© 2025 Aftab Ahmed. All rights reserved.</p>
-  </footer>
+        <div class="md:w-1/2 flex justify-center reveal" data-reveal>
+          <!-- mock profile card -->
+          <div class="w-full max-w-sm card p-5 rounded-2xl">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 bg-gradient-to-br from-[#0f1724] to-[#081023] rounded-lg flex items-center justify-center">
+                <!-- avatar placeholder -->
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" class="opacity-80">
+                  <circle cx="12" cy="8" r="3.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                  <path d="M4 20c1.6-4.5 7.6-5 8-5s6.4.5 8 5" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-lg">Aftab Ahmed</div>
+                <div class="text-xs" style="color:var(--muted)">Dera Allah Yar, Balochistan • Lasbela University</div>
+              </div>
+            </div>
+
+            <div class="mt-4 text-sm" style="color:var(--muted)">
+              Pursuing Bachelor of Computer Science (12/2024 – 12/2028). I focus on algorithms, OOP and practical backend basics. I enjoy problem solving and learning new technologies.
+            </div>
+
+            <div class="mt-4 flex gap-3">
+              <a href="mailto:aftabrind310@gmail.com" class="px-3 py-2 rounded-md card text-xs">Email</a>
+              <a href="https://github.com/affi71" target="_blank" class="px-3 py-2 rounded-md card text-xs">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 reveal card p-6" data-reveal>
+          <h2 class="text-xl font-semibold">About</h2>
+          <div class="accent-line"></div>
+          <p class="mt-4 text-[--muted]">
+            I am Aftab Ahmed — currently studying Computer Science at Lasbela University DMJ Campus.
+            I have experience teaching and quality-checking work in textile production. My focus areas: data structures, algorithms, OOP, and backend fundamentals. I like building small tools and learning new stacks.
+          </p>
+
+          <div class="mt-6 grid sm:grid-cols-2 gap-3">
+            <div class="space-y-2">
+              <div class="text-xs text-[--muted]">Location</div>
+              <div class="font-medium">Dera Allah Yar, Balochistan, Pakistan</div>
+            </div>
+            <div class="space-y-2">
+              <div class="text-xs text-[--muted]">Availability</div>
+              <div class="font-medium">Open to internships & small freelance work</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="reveal card p-4" data-reveal>
+          <h3 class="font-semibold text-sm">Contact</h3>
+          <div class="mt-2 text-[--muted] text-sm">
+            <div>Email: <a class="neon-accent" href="mailto:aftabrind310@gmail.com">aftabrind310@gmail.com</a></div>
+            <div>Phone: <span class="text-white">03473336405</span></div>
+            <div class="mt-2 flex gap-2">
+              <a href="https://www.linkedin.com/in/Affirind310" target="_blank" title="LinkedIn" class="p-2 card rounded-md">LI</a>
+              <a href="https://github.com/affi71" target="_blank" title="GitHub" class="p-2 card rounded-md">GH</a>
+              <a href="https://www.instagram.com/_5alar71" target="_blank" title="Instagram" class="p-2 card rounded-md">IG</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold">Projects</h2>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Example project cards - replace details with your projects -->
+        <article class="card p-4 reveal" data-reveal>
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-semibold">Project — Mini CMS</h3>
+              <div class="text-xs" style="color:var(--muted)">Python • Flask • MySQL</div>
+            </div>
+            <div class="text-sm neon-accent">Open</div>
+          </div>
+          <p class="mt-3 text-[--muted] text-sm">Small content management tool to manage articles and users. Built for learning backend fundamentals and auth.</p>
+          <div class="mt-4 flex gap-2">
+            <a href="https://github.com/affi71" class="text-xs card px-3 py-2 rounded-md">Source</a>
+            <a href="#" class="text-xs card px-3 py-2 rounded-md">Live</a>
+          </div>
+        </article>
+
+        <article class="card p-4 reveal" data-reveal>
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-semibold">Textile QC Tool (internal)</h3>
+              <div class="text-xs" style="color:var(--muted)">C++ • Tools</div>
+            </div>
+            <div class="text-sm neon-accent">Closed</div>
+          </div>
+          <p class="mt-3 text-[--muted] text-sm">Utility used in finishing department for simple checks and logging inspection results.</p>
+          <div class="mt-4 flex gap-2">
+            <a href="#" class="text-xs card px-3 py-2 rounded-md">Notes</a>
+          </div>
+        </article>
+
+        <article class="card p-4 reveal" data-reveal>
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-semibold">Algorithm Visualizer (study)</h3>
+              <div class="text-xs" style="color:var(--muted)">Python • Web</div>
+            </div>
+            <div class="text-sm neon-accent">WIP</div>
+          </div>
+          <p class="mt-3 text-[--muted] text-sm">Visualization of sorting and graph algorithms — educational project to practice DSA and UI basics.</p>
+          <div class="mt-4 flex gap-2">
+            <a href="#" class="text-xs card px-3 py-2 rounded-md">Repo</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold">Skills</h2>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="card p-5 reveal" data-reveal>
+          <h4 class="font-semibold">Technical</h4>
+          <div class="mt-4 space-y-4">
+            <!-- skill item -->
+            <div>
+              <div class="flex justify-between text-sm"><div>Python</div><div class="text-[--muted]">80%</div></div>
+              <div class="progress-track mt-2">
+                <div class="progress-fill" data-fill="80%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm"><div>C / C++</div><div class="text-[--muted]">70%</div></div>
+              <div class="progress-track mt-2">
+                <div class="progress-fill" data-fill="70%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm"><div>MySQL</div><div class="text-[--muted]">60%</div></div>
+              <div class="progress-track mt-2">
+                <div class="progress-fill" data-fill="60%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm"><div>MongoDB (Basics)</div><div class="text-[--muted]">45%</div></div>
+              <div class="progress-track mt-2">
+                <div class="progress-fill" data-fill="45%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-5 reveal" data-reveal>
+          <h4 class="font-semibold">Soft Skills & Languages</h4>
+          <div class="mt-4 text-[--muted]">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Communication</li>
+              <li>Time Management</li>
+              <li>Problem Solving</li>
+            </ul>
+
+            <div class="mt-4">
+              <div class="text-sm">Languages</div>
+              <div class="mt-2 flex gap-2 flex-wrap text-xs">
+                <span class="card px-3 py-1 rounded-md">English</span>
+                <span class="card px-3 py-1 rounded-md">Urdu</span>
+                <span class="card px-3 py-1 rounded-md">Balochi</span>
+                <span class="card px-3 py-1 rounded-md">Sindhi</span>
+                <span class="card px-3 py-1 rounded-md">Brahvi</span>
+                <span class="card px-3 py-1 rounded-md">Saraiki</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE / EDUCATION TIMELINE -->
+    <section id="experience" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold">Experience & Education</h2>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="card p-5 reveal" data-reveal>
+          <h4 class="font-semibold">Professional Experience</h4>
+          <div class="mt-4 space-y-4 text-[--muted]">
+            <div>
+              <div class="font-medium">Teacher — Iqra Raztul Quran High School, Quetta</div>
+              <div class="text-xs">Contributed to teaching and academic growth.</div>
+            </div>
+            <div>
+              <div class="font-medium">Checker — Lenco Textile Pvt LTD, Karachi</div>
+              <div class="text-xs">Finished department quality checks and reporting.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-5 reveal" data-reveal>
+          <h4 class="font-semibold">Education</h4>
+          <div class="mt-4 text-[--muted]">
+            <div class="font-medium">Lasbela University DMJ Campus</div>
+            <div class="text-xs">Bachelor of Computer Science (12/2024 – 12/2028)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="max-w-6xl mx-auto px-6 md:px-0 py-10">
+      <div class="card p-6 reveal" data-reveal>
+        <h3 class="text-lg font-semibold">Get in touch</h3>
+        <div class="accent-line"></div>
+
+        <div class="mt-4 grid md:grid-cols-2 gap-6">
+          <form id="contactForm" class="space-y-4">
+            <div>
+              <label class="text-xs">Name</label>
+              <input required name="name" class="w-full mt-2 p-3 rounded-md bg-transparent border border-white/6" placeholder="Your name" />
+            </div>
+            <div>
+              <label class="text-xs">Email</label>
+              <input required type="email" name="email" class="w-full mt-2 p-3 rounded-md bg-transparent border border-white/6" placeholder="you@example.com" />
+            </div>
+            <div>
+              <label class="text-xs">Message</label>
+              <textarea required name="message" rows="4" class="w-full mt-2 p-3 rounded-md bg-transparent border border-white/6" placeholder="Brief message"></textarea>
+            </div>
+            <div>
+              <button type="submit" class="px-4 py-2 rounded-md card">Send message</button>
+            </div>
+          </form>
+
+          <div class="text-[--muted]">
+            <div class="mb-4">
+              <strong>Email</strong><br/>
+              <a class="neon-accent" href="mailto:aftabrind310@gmail.com">aftabrind310@gmail.com</a>
+            </div>
+            <div class="mb-4">
+              <strong>Phone</strong><br/>
+              03473336405
+            </div>
+            <div class="mb-4">
+              <strong>Links</strong><br/>
+              <a href="https://www.linkedin.com/in/Affirind310" target="_blank">LinkedIn</a> •
+              <a href="https://github.com/affi71" target="_blank">GitHub</a> •
+              <a href="https://www.instagram.com/_5alar71" target="_blank">Instagram</a>
+            </div>
+
+            <div class="mt-6 text-sm" style="color:var(--muted)">
+              © 2025 Aftab Ahmed — Built with HTML, Tailwind. Hosted on GitHub Pages.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const sections = document.querySelectorAll('.fade');
-    window.addEventListener('scroll', () => {
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-          section.classList.add('show');
+    // Mobile menu
+    const mobileBtn = document.getElementById('mobileBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const iconOpen = document.getElementById('iconOpen');
+    const iconClose = document.getElementById('iconClose');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+
+    // Reveal on scroll using IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
         }
       });
+    }, {threshold: 0.12});
+
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
     });
-    window.dispatchEvent(new Event('scroll'));
-  </script>
-</body>
-  </html>
+
+    // Animate skill bars
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.progress-fill').forEach(el => {
+        const val = el.getAttribute('data-fill') || '0%';
+        setTimeout(() => { el.style.width = val; }, 300);
+      });
+    });
+
+    // Simple form handler (client-side only; it opens mail client by fallback)
+    document.getElementById('contactForm').addEventListener('submit
